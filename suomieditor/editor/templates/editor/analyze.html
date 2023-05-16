@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Word {{ base_form.word }}</title>
+    </head>
+    <body>
+        <main>
+            <form action="{% url 'analyze' %}" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>
+                        <h3>Word to Analyze</h3>
+                    </legend>
+                    {% if error_message %}
+                        <p>
+                            <strong>{{ error_message }}</strong>
+                        </p>
+                    {% endif %}
+                    {% if word %}
+                        <label for="word">Word:</label>
+                        <input type="text" name="word" id="word" value="{{ word }}">
+                    {% else %}
+                        <label for="word">Word:</label>
+                        <input type="text" name="word" id="word">
+                    {% endif %}
+                    {% if analyzed %}
+                        {% for word_item in analyzed %}
+                            <p>
+                                {{ word_item }}
+                            </p>
+                        {% endfor %}
+                    {% endif %}
+                </fieldset>
+                <input type="submit" value="Analyze">
+            </form>
+        </main>
+    </body>
+</html>
