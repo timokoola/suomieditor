@@ -11,10 +11,28 @@
             <section>
                 <h3>Word</h3>
                 <p>{{ base_form.word }}</p>
-                <h3>Declension</h3>
-                <p>{{ base_form.declension }}</p>
-                <h3>Gradation</h3>
-                <p>{{ base_form.gradation }}</p>
+                <h3>Type</h3>
+                <p>Declension: {{ base_form.declension }} Gradation: {{ base_form.gradation}}</p>
+                <h3>Words of same type</h3>
+                <ul>
+                    {% for word in same_type_words %}
+                        <li>
+                            <a href="{% url 'editor:detail' word.id %}">{{ word.word }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <h3>External Links</h3>
+                <ul>
+                    <li>
+                        <a href="https://www.kielitoimistonsanakirja.fi/#/{{base_form.word}}">"{{base_form.word}}" Kielitoimiston sanakirjassa</a>
+                    </li>
+                    <li>
+                        <a href="https://en.wiktionary.org/wiki/Special:Search?search={{base_form.word}}&go=Look+up&ns0=1">"{{base_form.word}}" English Wiktionary</a>
+                    </li>
+                    <li>
+                        <a href="https://fi.wiktionary.org/wiki/Special:Search?search={{base_form.word}}&go=Look+up&ns0=1">"{{base_form.word}}" Finnish Wiktionary</a>
+                    </li>
+                </ul>
             </section>
             <section>
                 <form action="{% url 'editor:add_cases' %}" method="post">

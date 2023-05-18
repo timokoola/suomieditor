@@ -13,4 +13,6 @@ urlpatterns = [
     path("add_cases/", views.add_cases, name="add_cases"),
     path("recent/", views.recent, name="recent"),
     path("search/", views.search, name="search"),
+    path("raw/", views.raw, name="raw"),
+    path("raw_analyze/", views.raw_analyze, name="raw_analyze"),
 ]

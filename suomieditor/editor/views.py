@@ -86,6 +86,11 @@ def detail(request, baseform_id):
     """Show one base form."""
     base_form = BaseForm.objects.get(pk=baseform_id)
     word_forms = listify(WordForm.objects.filter(baseform=base_form))
+    similar_forms = (
+        BaseForm.objects.filter(gradation=base_form.gradation)
+        .filter(declension=base_form.declension)
+        .exclude(word=base_form.word)
+    )[:5]
     numbers = WordForm.Number.choices
     cases = WordForm.Case.choices
     context = {
@@ -93,6 +98,7 @@ def detail(request, baseform_id):
         "word_forms": word_forms,
         "numbers": numbers,
         "cases": cases,
+        "same_type_words": similar_forms,
     }
     return render(request, "editor/detail.html", context)
 
@@ -162,3 +168,29 @@ def recent(request):
     word_forms = WordForm.objects.order_by("-timestamp")[:50]
     context = {"word_forms": word_forms}
     return render(request, "editor/recent.html", context)
+
+
+def raw(request):
+    """Analyze a word."""
+    if request.method == "POST":
+        words = []
+        words = request.POST["word"].split()
+        v = libvoikko.Voikko("fi", "/usr/local/Cellar/libvoikko/4.3.2/lib/voikko")
+        for word in words:
+            result = []
+            word_results = v.analyze(word.lower())
+            for word_result in word_results:
+                result.append(word_result)
+
+        context = {"results": result}
+
+        return render(request, "editor/raw_analyze.html", context)
+
+    else:
+        # throw method not allowed
+        return HttpResponse("Method not allowed", status=405)
+
+
+def raw_analyze(request):
+    """render raw analyze page"""
+    return render(request, "editor/raw_analyze.html")
