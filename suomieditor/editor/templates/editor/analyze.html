@@ -26,13 +26,6 @@
                         <label for="word">Word:</label>
                         <input type="text" name="word" id="word">
                     {% endif %}
-                    {% if analyzed %}
-                        {% for word_item in analyzed %}
-                            <p>
-                                {{ word_item }}
-                            </p>
-                        {% endfor %}
-                    {% endif %}
                 </fieldset>
                 <input type="submit" value="Analyze">
             </form>

@@ -9,6 +9,9 @@ class BaseForm(models.Model):
     gradation = models.CharField(max_length=1, default="")
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ["word", "declension", "gradation"]
+
     def __str__(self):
         return f"{self.word} ({self.declension}, {self.gradation})"
 
@@ -20,7 +23,6 @@ class WordForm(models.Model):
 
     class Case(models.TextChoices):
         NOMINATIVE = "nominative"
-        ACCUSATIVE = "accusative"
         GENITIVE = "genitive"
         PARTITIVE = "partitive"
         INESSIVE = "inessive"
@@ -34,6 +36,7 @@ class WordForm(models.Model):
         ABESSIVE = "abessive"
         INSTRUCTIVE = "instructive"
         COMITATIVE = "comitative"
+        ACCUSATIVE = "accusative"
 
         # foreignkey to BaseForm
 
@@ -43,6 +46,12 @@ class WordForm(models.Model):
     case = models.CharField(max_length=20, choices=Case.choices)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ["baseform", "wordform", "number", "case"]
+
     def __str__(self):
         number_pretty = "singular" if self.number == 1 else "plural"
         return f"{self.wordform} ({number_pretty}, {self.case} of {self.baseform.word})"
+
+    def url(self):
+        return f"/editor/{self.baseform.id}/"

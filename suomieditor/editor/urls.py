@@ -2,10 +2,15 @@ from django.urls import path
 
 from . import views
 
+app_name = "editor"
+
 urlpatterns = [
     path("", views.index, name="index"),
     # with id (pk)
-    path("<int:baseform_id>/", views.detail, name="detail"),
+    path("word/<int:baseform_id>/", views.detail, name="detail"),
     # analyze
     path("analyze/", views.analyze, name="analyze"),
+    path("add_cases/", views.add_cases, name="add_cases"),
+    path("recent/", views.recent, name="recent"),
+    path("search/", views.search, name="search"),
 ]

@@ -9,17 +9,37 @@
     <body>
         <main>
             <h3>Words</h3>
-            {% if base_forms %}
-                <ul>
-                    {% for base_form in base_forms %}
-                        <li>
-                            <a href="/editor/{{ base_form.id }}/">{{ base_form }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No Base forms are available.</p>
-            {% endif %}
+            <section>
+
+                <form action="{% url 'editor:search' %}" method="get">
+                    <fieldset>
+                        <legend>
+                            <h3>Search term</h3>
+                        </legend>
+                        {% if error_message %}
+                            <p>
+                                <strong>{{ error_message }}</strong>
+                            </p>
+                        {% endif %}
+                        <label for="word">Word:</label>
+                        <input type="text" name="word" id="word">
+                    </fieldset>
+                    <input type="submit" value="Search">
+                </form>
+            </section>
+            <section>
+                {% if base_forms %}
+                    <ul>
+                        {% for base_form in base_forms %}
+                            <li>
+                                <a href="/editor/word/{{ base_form.id }}/">{{ base_form }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No Base forms are available.</p>
+                {% endif %}
+            </section>
         </main>
     </body>
 </html>

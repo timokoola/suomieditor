@@ -8,12 +8,34 @@
     </head>
     <body>
         <main>
-            <h3>Word</h3>
-            <p>{{ base_form.word }}</p>
-            <h3>Declension</h3>
-            <p>{{ base_form.declension }}</p>
-            <h3>Gradation</h3>
-            <p>{{ base_form.gradation }}</p>
+            <section>
+                <h3>Word</h3>
+                <p>{{ base_form.word }}</p>
+                <h3>Declension</h3>
+                <p>{{ base_form.declension }}</p>
+                <h3>Gradation</h3>
+                <p>{{ base_form.gradation }}</p>
+            </section>
+            <section>
+                <form action="{% url 'editor:add_cases' %}" method="post">
+
+                    {% csrf_token %}
+
+                    <input type="hidden" name="base_form" value="{{ base_form.id }}">
+
+                    {% for number_key, cases in word_forms.items %}
+                        <fieldset>
+                            <legend>{{ number_key }}</legend>
+                            {% for item in cases %}
+                                <label for="{{item.case}}">{{item.case_label}}:</label>
+                                <input type="text" name="{{item.case}}" id="{{item.case}}" value="{{ item.text }}">
+                            {% endfor %}
+                        </fieldset>
+                    {% endfor %}
+                    <input type="submit" value="Add">
+                </form>
+            </section>
+            <section></section>
         </main>
     </body>
 </html>

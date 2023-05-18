@@ -17,19 +17,24 @@ def import_kotus_all_json(apps, schema_editor):
         kotus_all = json.load(f)
 
     for word in kotus_all:
-        baseform = BaseForm.objects.create(
+        declension = word["tn"]
+        if declension > 52:
+            continue
+        baseform, created = BaseForm.objects.update_or_create(
             word=word["word"],
-            declension=word["tn"],
+            declension=declension,
             gradation=word["av"],
         )
-        baseform
-        word = WordForm.objects.create(
+        if created:
+            baseform.save()
+        word, created = WordForm.objects.update_or_create(
             baseform=baseform,
             wordform=word["word"],
             number=1,
             case="nominative",
         )
-        word.save()
+        if created:
+            word.save()
 
 
 class Migration(migrations.Migration):
