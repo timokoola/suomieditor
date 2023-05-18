@@ -7,6 +7,8 @@
         <title>Search</title>
     </head>
     <body>
+        <!-- include header -->
+        {% include 'editor/header.html' %}
         <main>
             <form action="{% url 'editor:raw' %}" method="post">
                 <fieldset>
@@ -26,9 +28,14 @@
             </form>
 
             <section>
-                {% for result in results %}
-                    <p>{{result}}</p>
-                {% endfor %}
+                {% if results %}
+                    <h3>Results</h3>
+                    {% for result in results %}
+                        <p>{{result}}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No results from Voikko</p>
+                {% endif %}
             </section>
         </main>
     </body>

@@ -7,6 +7,8 @@
         <title>Words</title>
     </head>
     <body>
+        <!-- include header -->
+        {% include 'editor/header.html' %}
         <main>
             <h3>Words</h3>
             <section>
@@ -32,7 +34,7 @@
                     <ul>
                         {% for base_form in base_forms %}
                             <li>
-                                <a href="/editor/word/{{ base_form.id }}/">{{ base_form }}</a>
+                                <a href="/word/{{ base_form.id }}/">{{ base_form }}</a>
                             </li>
                         {% endfor %}
                     </ul>
