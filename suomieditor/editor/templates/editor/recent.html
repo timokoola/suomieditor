@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        {% load static %}
+
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'editor/reset.css' %}">
+        <link rel="stylesheet" href="{% static 'editor/style.css' %}">
         <title>Recent Additions</title>
     </head>
     <body>
@@ -13,19 +17,16 @@
             <section>
                 <form action="{% url 'editor:analyze' %}" method="post">
                     {% csrf_token %}
-                    <fieldset>
-                        <legend>
-                            <h3>Word to Analyze</h3>
-                        </legend>
-                        {% if error_message %}
-                            <p>
-                                <strong>{{ error_message }}</strong>
-                            </p>
-                        {% endif %}
-                        <label for="word">Word:</label>
-                        <input type="text" name="word" id="word">
-                    </fieldset>
-                    <input type="submit" value="Analyze">
+                    {% if error_message %}
+                        <p>
+                            <strong>{{ error_message }}</strong>
+                        </p>
+                    {% endif %}
+                    <label for="word">Add Words Here:</label>
+                    <input type="text" name="word" id="word">
+                    <div class="button_parent">
+                        <input type="submit" value="Analyze">
+                    </div>
                 </section>
                 {% if word_forms %}
                     <section>
@@ -40,5 +41,6 @@
                     </section>
                 {% endif %}
             </main>
+            {% include 'editor/footer.html' %}
         </body>
     </html>

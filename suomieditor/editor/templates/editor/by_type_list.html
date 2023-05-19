@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        {% load static %}
+
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'editor/reset.css' %}">
+        <link rel="stylesheet" href="{% static 'editor/style.css' %}">
         <title>Types</title>
     </head>
     <body>
         <!-- include header -->
         {% include 'editor/header.html' %}
-        <main>
+        <main class="flow">
             <h3>Types</h3>
-            <section>
-                {% for example in examples %}
-                    <article>
-                        <h4>Declension: {{ example.declension }} Gradation: {{ example.gradation }} Count: {{ example.size }}</h4>
-                        <span>
-                            {% for base_form in example.example_baseforms %}
-                                <a href="{% url 'editor:detail' base_form.id %}">{{ base_form.word }}</a>
-                            {% endfor %}
-                        </span>
-                    </article>
-                {% endfor %}
-
-            </section>
-            <section></section>
+            {% for example in examples %}
+                <section >
+                    <h4>Declension: {{ example.declension }} Gradation: {{ example.gradation }} Count: {{ example.size }}</h4>
+                    <span>
+                        {% for base_form in example.example_baseforms %}
+                            <a href="{% url 'editor:detail' base_form.id %}">{{ base_form.word }}</a>
+                        {% endfor %}
+                    </span>
+                </section>
+            {% endfor %}
         </main>
+        {% include 'editor/footer.html' %}
     </body>
 </html>
