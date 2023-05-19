@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render, redirect
 from .constants import EXAMPLE_NOUN_FORMS, FORM_MAPPING
 
@@ -127,15 +128,18 @@ def add_cases(request):
     # if GET, show form
     if request.method == "POST":
         words = []
-        for key, value in request.POST.items():
-            # skip csrf token and base_form
+        for key in request.POST.keys():
             if key == "csrfmiddlewaretoken" or key == "base_form":
                 continue
-            field_words = value.split()
-            for field_word in field_words:
-                words.append(field_word)
+            values = request.POST.getlist(key)
+            # skip csrf token and base_form
+            for value in values:
+                field_words = value.split()
+                for field_word in field_words:
+                    words.append(field_word)
         v = libvoikko.Voikko("fi", "/usr/local/Cellar/libvoikko/4.3.2/lib/voikko")
         for word in words:
+            logging.info(word)
             word_results = v.analyze(word.lower())
             for word_result in word_results:
                 form_mapper(word_result, word.lower())
