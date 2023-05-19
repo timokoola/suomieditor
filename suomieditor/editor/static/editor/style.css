@@ -1,0 +1,14 @@
+:root {
+  /* CSS HSL */
+  --rich-black: hsla(216, 100%, 4%, 1);
+  --oxford-blue: hsla(211, 100%, 12%, 1);
+  --yale-blue: hsla(209, 100%, 20%, 1);
+  --mikado-yellow: hsla(46, 100%, 50%, 1);
+  --gold: hsla(50, 100%, 52%, 1);
+
+  color: var(--rich-black);
+}
+
+a {
+  color: var(--oxford-blue);
+}
