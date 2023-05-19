@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        {% load static %}
+        {% load editor_extras %}
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'editor/reset.css' %}">
+        <link rel="stylesheet" href="{% static 'editor/style.css' %}">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,15 +52,20 @@
                     <input type="hidden" name="base_form" value="{{ base_form.id }}">
 
                     {% for number_key, cases in word_forms.items %}
-                        <fieldset>
+                        <fieldset class="flow">
                             <legend>{{ number_key }}</legend>
                             {% for item in cases %}
-                                <label for="{{item.case}}">{{item.case_label}}:</label>
-                                <input type="text" name="{{item.case}}" id="{{item.case}}" value="{{ item.text }}">
+                                <div class="form_item">
+                                    <label for="{{item.case}}">{{item.case_label}}:</label>
+                                    <input type="text" name="{{item.case}}" id="{{item.case}}" value="{{ item.text }}" placeholder="{{ item.case | help_text }}">
+                                    <span class="help">{{ item.case | help_text }}</span>
+                                </div>
                             {% endfor %}
                         </fieldset>
                     {% endfor %}
-                    <input type="submit" value="Add">
+                    <div class="button_parent">
+                        <input type="submit" value="Add">
+                    </div>
                 </form>
             </section>
             <section></section>

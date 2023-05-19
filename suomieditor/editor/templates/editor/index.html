@@ -14,21 +14,18 @@
         <!-- include header -->
         {% include 'editor/header.html' %}
         <main>
-            <section>
+            <section class="search">
                 <form action="{% url 'editor:search' %}" method="get">
-                    <fieldset>
-                        <legend>
-                            <h3>Search term</h3>
-                        </legend>
-                        {% if error_message %}
-                            <p>
-                                <strong>{{ error_message }}</strong>
-                            </p>
-                        {% endif %}
-                        <label for="word">Word:</label>
-                        <input type="text" name="word" id="word">
-                    </fieldset>
-                    <input type="submit" value="Search">
+                    <h3>Search</h3>
+                    {% if error_message %}
+                        <p>
+                            <strong>{{ error_message }}</strong>
+                        </p>
+                    {% endif %}
+                    <input type="text" name="word" id="word">
+                    <div class="button_parent">
+                        <input type="submit" value="Search">
+                    </div>
                 </form>
             </section>
             <section>
@@ -46,5 +43,6 @@
                 {% endif %}
             </section>
         </main>
+        {% include 'editor/footer.html' %}
     </body>
 </html>

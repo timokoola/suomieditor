@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .constants import FORM_MAPPING
+from .constants import EXAMPLE_NOUN_FORMS, FORM_MAPPING
 
 from voikko import libvoikko
 
