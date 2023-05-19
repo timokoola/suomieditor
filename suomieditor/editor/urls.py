@@ -15,4 +15,5 @@ urlpatterns = [
     path("search/", views.search, name="search"),
     path("raw/", views.raw, name="raw"),
     path("raw_analyze/", views.raw_analyze, name="raw_analyze"),
+    path("types/", views.by_type_list, name="by_type_list"),
 ]

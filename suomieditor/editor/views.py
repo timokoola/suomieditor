@@ -6,7 +6,7 @@ from voikko import libvoikko
 # Create your views here.
 from django.views import generic
 from django.http import HttpResponse
-from .models import BaseForm, WordForm
+from .models import BaseForm, ExampleCache, WordForm
 
 
 # {'BASEFORM': 'kääre', 'CLASS': 'nimisana',
@@ -194,3 +194,10 @@ def raw(request):
 def raw_analyze(request):
     """render raw analyze page"""
     return render(request, "editor/raw_analyze.html")
+
+
+def by_type_list(request):
+    """List all the declensions and gradations types with examples"""
+    examples = ExampleCache.objects.all().order_by("declension", "gradation")
+    context = {"examples": examples}
+    return render(request, "editor/by_type_list.html", context)

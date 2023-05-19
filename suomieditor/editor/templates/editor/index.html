@@ -34,7 +34,7 @@
                     <ul>
                         {% for base_form in base_forms %}
                             <li>
-                                <a href="/word/{{ base_form.id }}/">{{ base_form }}</a>
+                                <a href="{% url 'editor:detail' base_form.id %}">{{ base_form }}</a>
                             </li>
                         {% endfor %}
                     </ul>

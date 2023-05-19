@@ -3,6 +3,26 @@ from django.db import models
 # Create your models here.
 
 
+class ExampleCache(models.Model):
+    declension = models.IntegerField(default=0)
+    gradation = models.CharField(max_length=1, default="")
+    size = models.IntegerField(default=0)
+    examples = models.TextField(default="")
+
+    class Meta:
+        unique_together = ["declension", "gradation"]
+
+    # TODO: maybe migrate to ids instead of words?
+    def example_baseforms(self):
+        for example in self.examples.split(", "):
+            yield BaseForm.objects.get(
+                word=example, declension=self.declension, gradation=self.gradation
+            )
+
+    def __str__(self):
+        return f"{self.declension}, {self.gradation} ({self.size}): {self.examples}"
+
+
 class BaseForm(models.Model):
     word = models.CharField(max_length=100, default="")
     declension = models.IntegerField(default=0)

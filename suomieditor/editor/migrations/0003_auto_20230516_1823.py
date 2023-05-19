@@ -18,7 +18,7 @@ def import_kotus_all_json(apps, schema_editor):
 
     for word in kotus_all:
         declension = word["tn"]
-        if declension > 52:
+        if declension > 51:
             continue
         baseform, created = BaseForm.objects.update_or_create(
             word=word["word"],
