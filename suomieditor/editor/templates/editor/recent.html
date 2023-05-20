@@ -1,46 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        {% load static %}
+{% extends "editor/base.html" %}
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{% static 'editor/reset.css' %}">
-        <link rel="stylesheet" href="{% static 'editor/style.css' %}">
-        <title>Recent Additions</title>
-    </head>
-    <body>
-        <!-- include header -->
-        {% include 'editor/header.html' %}
-        <main>
+{% block title %}Recent Additions
+{% endblock %}
+
+{% block content %}
+    <section>
+        <form action="{% url 'editor:analyze' %}" method="post">
+            {% csrf_token %}
+            {% if error_message %}
+                <p>
+                    <strong>{{ error_message }}</strong>
+                </p>
+            {% endif %}
+            <label for="word">Add Words Here:</label>
+            <input type="text" name="word" id="word">
+            <div class="button_parent">
+                <input type="submit" value="Analyze">
+            </div>
+        </section>
+        {% if word_forms %}
             <section>
-                <form action="{% url 'editor:analyze' %}" method="post">
-                    {% csrf_token %}
-                    {% if error_message %}
-                        <p>
-                            <strong>{{ error_message }}</strong>
-                        </p>
-                    {% endif %}
-                    <label for="word">Add Words Here:</label>
-                    <input type="text" name="word" id="word">
-                    <div class="button_parent">
-                        <input type="submit" value="Analyze">
-                    </div>
-                </section>
-                {% if word_forms %}
-                    <section>
-                        <ul>
-                            {% for word_form in word_forms %}
-                                <li>
-                                    <a href="{% url 'editor:detail' word_form.baseform.id %}">{{ word_form }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </section>
-                {% endif %}
-            </main>
-            {% include 'editor/footer.html' %}
-        </body>
-    </html>
+                <ul>
+                    {% for word_form in word_forms %}
+                        <li>
+                            <a href="{% url 'editor:detail' word_form.baseform.id %}">{{ word_form }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
+    {% endblock %}

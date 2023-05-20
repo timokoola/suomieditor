@@ -1,48 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        {% load static %}
+{% extends "editor/base.html" %}
 
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{% static 'editor/reset.css' %}">
-        <link rel="stylesheet" href="{% static 'editor/style.css' %}">
-        <title>Words</title>
-    </head>
-    <body>
-        <!-- include header -->
-        {% include 'editor/header.html' %}
-        <main>
-            <section class="search">
-                <form action="{% url 'editor:search' %}" method="get">
-                    <h3>Search</h3>
-                    {% if error_message %}
-                        <p>
-                            <strong>{{ error_message }}</strong>
-                        </p>
-                    {% endif %}
-                    <input type="text" name="word" id="word">
-                    <div class="button_parent">
-                        <input type="submit" value="Search">
-                    </div>
-                </form>
-            </section>
-            <section>
-                {% if base_forms %}
-                    <h3>Words</h3>
-                    <ul>
-                        {% for base_form in base_forms %}
-                            <li>
-                                <a href="{% url 'editor:detail' base_form.id %}">{{ base_form }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No Base forms are available.</p>
-                {% endif %}
-            </section>
-        </main>
-        {% include 'editor/footer.html' %}
-    </body>
-</html>
+{% block title %}Words
+{% endblock %}
+
+{% block content %}
+    <section class="search">
+        <form action="{% url 'editor:search' %}" method="get">
+            <h3>Search</h3>
+            {% if error_message %}
+                <p>
+                    <strong>{{ error_message }}</strong>
+                </p>
+            {% endif %}
+            <input type="text" name="word" id="word">
+            <div class="button_parent">
+                <input type="submit" value="Search">
+            </div>
+        </form>
+    </section>
+    <section>
+        {% if base_forms %}
+            <h3>Words</h3>
+            <ul>
+                {% for base_form in base_forms %}
+                    <li>
+                        <a href="{% url 'editor:detail' base_form.id %}">{{ base_form }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No Base forms are available.</p>
+        {% endif %}
+    </section>
+{% endblock %}

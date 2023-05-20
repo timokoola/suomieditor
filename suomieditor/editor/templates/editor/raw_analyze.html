@@ -1,42 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Search</title>
-    </head>
-    <body>
-        <!-- include header -->
-        {% include 'editor/header.html' %}
-        <main>
-            <form action="{% url 'editor:raw' %}" method="post">
-                <fieldset>
-                    {% csrf_token %}
-                    <legend>
-                        <h3>Search term</h3>
-                    </legend>
-                    {% if error_message %}
-                        <p>
-                            <strong>{{ error_message }}</strong>
-                        </p>
-                    {% endif %}
-                    <label for="word">Word:</label>
-                    <input type="text" name="word" id="word">
-                </fieldset>
-                <input type="submit" value="Run Voikko">
-            </form>
+{% extends "editor/base.html" %}
 
-            <section>
-                {% if results %}
-                    <h3>Results</h3>
-                    {% for result in results %}
-                        <p>{{result}}</p>
-                    {% endfor %}
-                {% else %}
-                    <p>No results from Voikko</p>
-                {% endif %}
-            </section>
-        </main>
-    </body>
-</html>
+{% block title %}Search
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'editor:raw' %}" method="post">
+        <fieldset>
+            {% csrf_token %}
+            <legend>
+                <h3>Search term</h3>
+            </legend>
+            {% if error_message %}
+                <p>
+                    <strong>{{ error_message }}</strong>
+                </p>
+            {% endif %}
+            <label for="word">Word:</label>
+            <input type="text" name="word" id="word">
+        </fieldset>
+        <input type="submit" value="Run Voikko">
+    </form>
+
+    <section>
+        {% if results %}
+            <h3>Results</h3>
+            {% for result in results %}
+                <p>{{result}}</p>
+            {% endfor %}
+        {% else %}
+            <p>No results from Voikko</p>
+        {% endif %}
+    </section>
+{% endblock %}
