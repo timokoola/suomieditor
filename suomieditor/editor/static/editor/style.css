@@ -98,17 +98,17 @@ footer {
   padding: 1em;
   border-top: 0.25em dashed var(--gold);
   text-align: center;
-  color: hsla(216, 100%, 4%, 0.3);
+  color: var(--oxford-blue);
 }
 
 footer a {
-  color: var(--gold);
+  color: var(--oxford-blue);
   text-decoration: underline;
 }
 
 footer a:hover,
 footer a:focus {
-  color: var(--gold);
+  color: var(--oxford-blue);
   text-decoration: underline;
 }
 
