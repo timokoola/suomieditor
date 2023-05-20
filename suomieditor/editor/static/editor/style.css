@@ -32,6 +32,7 @@ main {
   max-width: 65ch;
   margin: 0 auto;
   padding: 0 1rem;
+  min-height: calc(100vh - 10em);
 }
 
 section {
