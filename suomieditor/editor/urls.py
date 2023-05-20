@@ -16,4 +16,9 @@ urlpatterns = [
     path("raw/", views.raw, name="raw"),
     path("raw_analyze/", views.raw_analyze, name="raw_analyze"),
     path("types/", views.by_type_list, name="by_type_list"),
+    path(
+        "types/<int:declension_id>/<str:gradation_id>",
+        views.by_type_word_list,
+        name="by_type_word_list",
+    ),
 ]

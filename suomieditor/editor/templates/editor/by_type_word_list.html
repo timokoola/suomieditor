@@ -1,0 +1,17 @@
+{% extends "editor/base.html" %}
+
+{% block title %}Types
+{% endblock %}
+
+{% block content %}
+    <h2>Types</h2>
+    <section >
+        <h4>Declension: {{ declension }} Gradation: {{ gradation }} Count: {{ size }}</h4>
+        <span>
+            {% for base_form in baseforms %}
+                <a href="{% url 'editor:detail' base_form.id %}">{{ base_form.word }}</a>
+            {% endfor %}
+        </span>
+    </section>
+
+{% endblock %}

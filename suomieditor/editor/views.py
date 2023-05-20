@@ -205,3 +205,16 @@ def by_type_list(request):
     examples = ExampleCache.objects.all().order_by("declension", "gradation")
     context = {"examples": examples}
     return render(request, "editor/by_type_list.html", context)
+
+
+def by_type_word_list(request, declension_id, gradation_id):
+    """List all the declensions and gradations types with examples"""
+    baseforms = BaseForm.objects.filter(declension=declension_id).filter(
+        gradation=gradation_id
+    )
+    context = {
+        "baseforms": baseforms,
+        "declension": declension_id,
+        "gradation": gradation_id,
+    }
+    return render(request, "editor/by_type_word_list.html", context)

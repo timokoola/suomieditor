@@ -12,6 +12,11 @@
                 {% for base_form in example.example_baseforms %}
                     <a href="{% url 'editor:detail' base_form.id %}">{{ base_form.word }}</a>
                 {% endfor %}
+                {% if example.size > 5 %}
+                    <div class="button_parent">
+                        <a class="expand" href="{% url 'editor:by_type_word_list' example.declension example.gradation %}">more</a>
+                    </div>
+                {% endif %}
             </span>
         </section>
     {% endfor %}
