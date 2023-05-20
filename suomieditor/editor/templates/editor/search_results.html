@@ -33,7 +33,7 @@
                     <ul>
                         {% for result in results %}
                             <li>
-                                <a href="{% url 'editor:detail' result.baseform.id %}">{{ result }}</a>
+                                <a style="view-transition-name: detail-{{ result.baseform.id }}" href="{% url 'editor:detail' result.baseform.id %}">{{ result }}</a>
                             </li>
                         {% endfor %}
                     </ul>
