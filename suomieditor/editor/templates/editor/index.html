@@ -6,7 +6,7 @@
 {% block content %}
     <section class="search">
         <form action="{% url 'editor:search' %}" method="get">
-            <h3>Search</h3>
+            <h2>Search</h2>
             {% if error_message %}
                 <p>
                     <strong>{{ error_message }}</strong>
@@ -20,7 +20,7 @@
     </section>
     <section>
         {% if base_forms %}
-            <h3>Words</h3>
+            <h2>Words</h2>
             <ul>
                 {% for base_form in base_forms %}
                     <li>

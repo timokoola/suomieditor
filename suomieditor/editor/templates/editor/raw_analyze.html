@@ -8,7 +8,7 @@
         <fieldset>
             {% csrf_token %}
             <legend>
-                <h3>Search term</h3>
+                <h2>Search term</h2>
             </legend>
             {% if error_message %}
                 <p>
@@ -23,7 +23,7 @@
 
     <section>
         {% if results %}
-            <h3>Results</h3>
+            <h2>Results</h2>
             {% for result in results %}
                 <p>{{result}}</p>
             {% endfor %}

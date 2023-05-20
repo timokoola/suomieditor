@@ -7,11 +7,11 @@
 
 {% block content %}
     <section style="view-transition-name: detail-{{ base_form.id }}">
-        <h3>Word</h3>
+        <h2>Word</h2>
         <p>{{ base_form.word }}</p>
-        <h3>Type</h3>
+        <h2>Type</h2>
         <p>Declension: {{ base_form.declension }} Gradation: {{ base_form.gradation}}</p>
-        <h3>Words of same type</h3>
+        <h2>Words of same type</h2>
         <ul>
             {% for word in same_type_words %}
                 <li>
@@ -19,7 +19,7 @@
                 </li>
             {% endfor %}
         </ul>
-        <h3>External Links</h3>
+        <h2>External Links</h2>
         <ul>
             <li>
                 <a href="https://www.kielitoimistonsanakirja.fi/#/{{base_form.word}}">"{{base_form.word}}" Kielitoimiston sanakirjassa</a>
@@ -44,8 +44,8 @@
                     <legend>{{ number_key }}</legend>
                     {% for item in cases %}
                         <div class="form_item">
-                            <label for="{{item.case}}">{{item.case_label}}:</label>
-                            <input type="text" name="{{item.case}}" id="{{item.case}}" value="{{ item.text }}" placeholder="{{ item.case | help_text }}">
+                            <label for="{{item.case}}_{{number_key}}">{{item.case_label}}:</label>
+                            <input type="text" name="{{item.case}}_{{number_key}}" id="{{item.case}}_{{number_key}}" value="{{ item.text }}" placeholder="{{ item.case | help_text }}">
                             <span class="help">{{ item.case | help_text }}</span>
                         </div>
                     {% endfor %}
