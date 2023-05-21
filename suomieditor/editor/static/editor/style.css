@@ -198,3 +198,28 @@ li {
   list-style-type: none;
   padding: 0;
 }
+
+.icon_holder_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: last baseline;
+  margin: 1em 0;
+  outline-color: var(--gold);
+  outline-offset: 0.25em;
+}
+
+.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: last baseline;
+  outline-color: var(--gold);
+  outline-offset: 0.25em;
+  gap: 0.5em;
+}
+
+.icon_svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}

@@ -1,4 +1,8 @@
+import datetime
 import logging
+import time
+from django.contrib.syndication.views import Feed
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from .constants import EXAMPLE_NOUN_FORMS, FORM_MAPPING
 
@@ -218,3 +222,47 @@ def by_type_word_list(request, declension_id, gradation_id):
         "gradation": gradation_id,
     }
     return render(request, "editor/by_type_word_list.html", context)
+
+
+def rss(request):
+    """render rss page"""
+    return render(request, "editor/rss.html")
+
+
+def recent_as_file(request):
+    """generate a file of recent words"""
+    word_forms = WordForm.objects.order_by("-timestamp")[:50]
+    file_data = " ".join([word_form.wordform for word_form in word_forms])
+    file_name = f"recent_{time.time()}.txt"
+    response = HttpResponse(file_data, content_type="application/text charset=utf-8")
+    response["Content-Disposition"] = "attachment; filename=" + file_name.encode(
+        "utf-8"
+    ).decode("latin-1")
+    return response
+
+
+class LatestEntriesFeed(Feed):
+    # TODO: there is a smarter way to do this
+    # group by day and add words
+    # filter out singular nominative
+    title = "Latest words added to Keinonto.com"
+    link = "/"
+    description = "Latest words added to Keinonto.com"
+
+    def items(self):
+        #  return wordforms from last 1 day
+        three_days_ago = (
+            datetime.datetime.now() - datetime.timedelta(days=1)
+        ).isoformat()
+        return WordForm.objects.filter(timestamp__gte=three_days_ago).order_by(
+            "-timestamp"
+        )
+
+    def item_title(self, item):
+        return item.wordform
+
+    def item_description(self, item):
+        return f"{item.baseform.word} {item.case} {item.number}"
+
+    def item_link(self, item):
+        return reverse("editor:detail", args=[item.baseform.id])

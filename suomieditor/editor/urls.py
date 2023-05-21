@@ -14,6 +14,8 @@ urlpatterns = [
     path("recent/", views.recent, name="recent"),
     path("search/", views.search, name="search"),
     path("raw/", views.raw, name="raw"),
+    path("rss/", views.LatestEntriesFeed(), name="rss"),
+    path("recent_as_file/", views.recent_as_file, name="recent_as_file"),
     path("raw_analyze/", views.raw_analyze, name="raw_analyze"),
     path("types/", views.by_type_list, name="by_type_list"),
     path(

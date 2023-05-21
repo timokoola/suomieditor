@@ -1,4 +1,5 @@
 {% extends "editor/base.html" %}
+{% load static %}
 
 {% block title %}Recent Additions
 {% endblock %}
@@ -20,6 +21,17 @@
         </section>
         {% if word_forms %}
             <section>
+                <div class="icon_holder_row">
+                    <h2>Recently Added Words</h2>
+                    <div class="icons">
+                        <a href="{% url 'editor:recent_as_file' %}">
+                            <img class="icon_svg" src="{% static 'editor/download.svg' %}" alt="Download recent as file">
+                        </a>
+                        <a href="{% url 'editor:rss' %}">
+                            <img class="icon_svg" src="{% static 'editor/rss.svg' %}" alt="RSS Feed">
+                        </a>
+                    </div>
+                </div>
                 <ul>
                     {% for word_form in word_forms %}
                         <li>
