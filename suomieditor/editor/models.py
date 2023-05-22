@@ -60,10 +60,16 @@ class WordForm(models.Model):
 
         # foreignkey to BaseForm
 
+    class Source(models.TextChoices):
+        KOTUS = "kotus"
+        COLLECTOR = "collector"
+        EDITOR = "editor"
+
     baseform = models.ForeignKey(BaseForm, on_delete=models.CASCADE)
     wordform = models.CharField(max_length=100, default="")
     number = models.IntegerField(choices=Number.choices)
     case = models.CharField(max_length=20, choices=Case.choices)
+    source = models.CharField(max_length=20, choices=Source.choices, default="kotus")
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:

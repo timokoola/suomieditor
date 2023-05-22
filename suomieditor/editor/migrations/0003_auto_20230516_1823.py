@@ -31,6 +31,7 @@ def import_kotus_all_json(apps, schema_editor):
             baseform=baseform,
             wordform=word["word"],
             number=1,
+            # source="kotus", is the default
             case="nominative",
         )
         if created:

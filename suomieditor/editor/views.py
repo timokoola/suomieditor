@@ -45,10 +45,22 @@ def form_mapper(kotus_result, word_form):
             else WordForm.Number.PLURAL
         )
         form = FORM_MAPPING[kotus_result["SIJAMUOTO"]]
+        # check if the wordform already exists
+        # if it does, skip it
+        if (
+            WordForm.objects.filter(baseform=baseform)
+            .filter(wordform=word_form)
+            .filter(number=form_number)
+            .filter(case=form)
+            .exists()
+        ):
+            continue
+
         wordform, created = WordForm.objects.update_or_create(
             baseform=baseform,
             wordform=word_form,
             number=form_number,
+            source="editor",
             case=form,
         )
         if created:
@@ -224,14 +236,15 @@ def by_type_word_list(request, declension_id, gradation_id):
     return render(request, "editor/by_type_word_list.html", context)
 
 
-def rss(request):
-    """render rss page"""
-    return render(request, "editor/rss.html")
-
-
 def recent_as_file(request):
     """generate a file of recent words"""
-    word_forms = WordForm.objects.order_by("-timestamp")[:50]
+
+    one_day_ago = (datetime.datetime.now() - datetime.timedelta(days=1)).isoformat()
+    word_forms = (
+        WordForm.objects.filter(source="editor")
+        .filter(timestamp__gte=one_day_ago)
+        .order_by("-timestamp")
+    )
     file_data = " ".join([word_form.wordform for word_form in word_forms])
     file_name = f"recent_{time.time()}.txt"
     response = HttpResponse(file_data, content_type="application/text charset=utf-8")
@@ -244,25 +257,24 @@ def recent_as_file(request):
 class LatestEntriesFeed(Feed):
     # TODO: there is a smarter way to do this
     # group by day and add words
-    # filter out singular nominative
     title = "Latest words added to Keinonto.com"
     link = "/"
     description = "Latest words added to Keinonto.com"
 
     def items(self):
         #  return wordforms from last 1 day
-        three_days_ago = (
-            datetime.datetime.now() - datetime.timedelta(days=1)
-        ).isoformat()
-        return WordForm.objects.filter(timestamp__gte=three_days_ago).order_by(
-            "-timestamp"
+        one_day_ago = (datetime.datetime.now() - datetime.timedelta(days=1)).isoformat()
+        return (
+            WordForm.objects.filter(source="editor")
+            .filter(timestamp__gte=one_day_ago)
+            .order_by("-timestamp")
         )
 
     def item_title(self, item):
         return item.wordform
 
     def item_description(self, item):
-        return f"{item.baseform.word} {item.case} {item.number}"
+        return f"{item.baseform.word} {item.case} {item.number} {item.wordform}"
 
     def item_link(self, item):
         return reverse("editor:detail", args=[item.baseform.id])
