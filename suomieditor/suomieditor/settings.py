@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-obirqy)&dkia=)#iz@vpx)5v0f+72vqvkzrdke@p1_8vu0hv%-"
+try:
+    SECRET_KEY = os.environ["KEINONTO_SECRET_KEY"]
+except KeyError as e:
+    raise RuntimeError("Could not find a KEINONTO_SECRET_KEY in environment") from e
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.68.114", "127.0.0.1"]
+ALLOWED_HOSTS = ["192.168.68.114", "127.0.0.1", "keinonto.com", "www.keinonto.com"]
 
 
 # Application definition
@@ -117,6 +121,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATIC_ROOT = "/var/www/keinonto.com/static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
