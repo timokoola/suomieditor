@@ -27,9 +27,11 @@ except KeyError as e:
     raise RuntimeError("Could not find a KEINONTO_SECRET_KEY in environment") from e
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["192.168.68.114", "127.0.0.1", "keinonto.com", "www.keinonto.com"]
+CSRF_TRUSTED_ORIGINS = ["192.168.68.114", "127.0.0.1", "https://keinonto.com", "https://www.keinonto.com"]
+CSRF_COOKIE_DOMAIN = ".keinonto.com"
 
 
 # Application definition
