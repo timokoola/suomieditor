@@ -29,8 +29,12 @@ except KeyError as e:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["192.168.68.114", "127.0.0.1", "keinonto.com", "www.keinonto.com"]
-CSRF_TRUSTED_ORIGINS = ["192.168.68.114", "127.0.0.1", "https://keinonto.com", "https://www.keinonto.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "keinonto.com", "www.keinonto.com"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1",
+    "https://keinonto.com",
+    "https://www.keinonto.com",
+]
 CSRF_COOKIE_DOMAIN = ".keinonto.com"
 
 
