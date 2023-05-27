@@ -26,8 +26,15 @@ try:
 except KeyError as e:
     raise RuntimeError("Could not find a KEINONTO_SECRET_KEY in environment") from e
 
+# get the ENVIROMENT variable, default to development
+ENVIRONMENT = os.environ.get("ENVIRONMENT", "development")
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if ENVIRONMENT == "development":
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "keinonto.com", "www.keinonto.com"]
 CSRF_TRUSTED_ORIGINS = [
