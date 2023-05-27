@@ -14,6 +14,8 @@ from django.http import HttpResponse
 from .models import BaseForm, ExampleCache, WordForm
 
 
+DICTIONARY_FOLDER = "/etc/voikko"
+
 # {'BASEFORM': 'kääre', 'CLASS': 'nimisana',
 # 'FSTOUTPUT': '[Ln][Xp]kääre[X]kääre[Sg][Nm]iden',
 # 'NUMBER': 'plural', 'SIJAMUOTO': 'omanto',
@@ -126,7 +128,7 @@ def analyze(request):
     # if GET, show form
     if request.method == "POST":
         words = request.POST["word"].split()
-        v = libvoikko.Voikko("fi", "/usr/local/Cellar/libvoikko/4.3.2/lib/voikko")
+        v = libvoikko.Voikko("fi", DICTIONARY_FOLDER)
         for word in words:
             word_results = v.analyze(word.lower())
             for word_result in word_results:
@@ -153,7 +155,7 @@ def add_cases(request):
                 field_words = value.split()
                 for field_word in field_words:
                     words.append(field_word)
-        v = libvoikko.Voikko("fi", "/usr/local/Cellar/libvoikko/4.3.2/lib/voikko")
+        v = libvoikko.Voikko("fi", DICTIONARY_FOLDER)
         for word in words:
             logging.info(word)
             word_results = v.analyze(word.lower())
@@ -195,7 +197,7 @@ def raw(request):
     if request.method == "POST":
         words = []
         words = request.POST["word"].split()
-        v = libvoikko.Voikko("fi", "/usr/local/Cellar/libvoikko/4.3.2/lib/voikko")
+        v = libvoikko.Voikko("fi", DICTIONARY_FOLDER)
         for word in words:
             result = []
             word_results = v.analyze(word.lower())
