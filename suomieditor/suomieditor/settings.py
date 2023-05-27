@@ -69,6 +69,8 @@ MIDDLEWARE = [
 
 MIDDLEWARE += ["csp.middleware.CSPMiddleware"]
 
+CSP_STYLE_SRC = ["'self'", "https://fonts.googleapis.com"]
+
 ROOT_URLCONF = "suomieditor.urls"
 
 TEMPLATES = [
