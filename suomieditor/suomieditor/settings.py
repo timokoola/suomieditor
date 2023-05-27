@@ -67,6 +67,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+MIDDLEWARE += ["csp.middleware.CSPMiddleware"]
+
 ROOT_URLCONF = "suomieditor.urls"
 
 TEMPLATES = [
