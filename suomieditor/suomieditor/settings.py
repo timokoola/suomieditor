@@ -147,6 +147,8 @@ SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
