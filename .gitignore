@@ -139,3 +139,6 @@ GitHub.sublime-settings
 
 # downloaded files
 downloads/
+
+# envrc is per environment
+.envrc
